@@ -1,8 +1,8 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
       <h1>
-        Empleados
-        <small>Gestiona los Empleados del sistema</small>
+        Clientes
+        <small>Gestiona los Clientes del sistema</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="plantilla.php"><i class="fa fa-dashboard"></i> Inicio</a></li>
@@ -18,38 +18,87 @@
             <div class="box-header">
 
 
-            <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarEmpleados">Agregar Empleados</button>
+            <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarClientes">Agregar Clientes</button>
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive">
 
 
 
-              <table class="table table-bordered table-striped dt-responsive tablas" width="100%">
-                <thead>
-                  <tr>
-                    <th style="width:10px">#</th>
-                    <th>Cedula</th>
-                    <th>Nombre(s)</th>
-                    <th>Apellido(s)</th>
-                    <th>Fecha de Nacimiento</th>
-                    <th>Ingreso(Fecha)</th>
-                    <th>Cargo</th>
-                    <th>Estado civil</th>
-                    <th>Grado formacion</th>
-                    <th>Ocupacion</th>
-                    <th>Genero</th>
-                    <th>Estatus</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
+<table class="table table-bordered table-striped dt-responsive tablas" width="100%">
 
-                <tbody>
 
-                  <?=  listarEmpleados(); ?>
 
-              </tbody>
-            </table>
+<thead>
+
+
+
+ <tr>
+
+
+
+   <th style="width:10px">#</th>
+
+   <th>Nombre(s)</th>
+
+   <th>Apellido(s)</th>
+
+   <th>Foto</th>
+
+     <th>Estatus</th>
+
+   <th>Ingreso(Fecha)</th>
+
+  <th>Acciones</th>
+
+ </tr>
+
+
+
+</thead>
+
+
+
+<tbody>
+
+
+<?php
+
+foreach ($dtClientes as $cli){
+
+  echo '<tr>
+  <td>'.$cli["ID_Cliente"].'</td>
+  <td>'.$cli["Nombre"].'</td>
+  <td>'.$cli["Apellido"].'</td>
+  <td><img src="http://www.csriveraine.qc.ca/wp-content/uploads/2016/01/nopic.jpg" width="40px" alt=""></td>
+  <td><button class="btn btn-success btn-xs ">Activado</button></td>
+  <td>'.$cli["Fecha_Ing"].'</td>
+  <td>
+
+
+    <div class="btn-group">
+
+<button class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modalEditarClientes" ><i class="fa fa-pencil"></i></button>
+<form action="" method="post">
+<input type="number" class="form-control hidden" name="elimID" value="'.$cli["ID_Cliente"].'" required>
+<button class="btn btn-danger btn-xs" type="submit" value="'.$cat["ID_Categoria"].'" name="eliminarCli"><i class="fa fa-times"></i></button>
+</form>
+
+    </div>
+
+  </td>
+
+</tr>';
+
+}
+
+?>
+</tbody>
+</table>
+
+
+
+
             </div>
             <!-- /.box-body -->
           </div>
@@ -59,12 +108,20 @@
     </section>
     <!-- /.content -->
 
+
+
+
+
+
+
+
+
 <!--=====================================
 
-          MODAL AGREGAR Empleado
+          MODAL AGREGAR Clientes
 
 ======================================-->
-<div id="modalAgregarEmpleados" class="modal fade" role="dialog">
+<div id="modalAgregarClientes" class="modal fade" role="dialog">
 <div class="modal-dialog">
   <div class="modal-content">
     <form role="form" method="post" enctype="multipart/form-data">
@@ -75,7 +132,7 @@
       ======================================-->
       <div class="modal-header" style="background:#3c8dbc; color:white">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Agregar Empleado</h4>
+        <h4 class="modal-title">Agregar Clientes</h4>
       </div>
       <!--=====================================
 
@@ -105,15 +162,8 @@
            <div class="form-group">
             <div class="input-group">
               <span class="input-group-addon"><i class="fa fa-id-card"></i></span>
-              <input type="text" class="form-control input-lg" name="nuevaCedula" placeholder="Ingresar Cedula" id="nuevaCedula" required>
+              <input type="number" class="form-control input-lg" name="nuevaCedula" placeholder="Ingresar Cedula" id="nuevaCedula" required>
           </div>
-          </div>
-          <!-- ENTRADA PARA EL CARGO -->
-           <div class="form-group">
-            <div class="input-group">
-              <span class="input-group-addon"><i class="fa fa-user-secret"></i></span>
-              <input type="text" class="form-control input-lg" name="nuevoCargo" placeholder="Ingresar Cargo" required>
-            </div>
           </div>
             <!-- ENTRADA PARA EL Nacionalidad -->
             <div class="form-group">
@@ -130,29 +180,7 @@
               <input type="date" class="form-control input-lg" name="nuevaNacimiento" placeholder="Ingresar fecha de Nacimiento" required>
             </div>
           </div>
-           <!-- ENTRADA PARA SELECCIONAR SU Formacion -->
-           <div class="form-group">
-            <div class="input-group">
-              <span class="input-group-addon"><i class="fa fa-user-plus"></i></span>
-              <select class="form-control input-lg" name="nuevaFormacion">
-                <option value="">Selecionar Grado de Formacion</option>
-                <option value="Bachiller">Bachiller</option>
-                <option value="Profesional">Profesional</option>
-                <option value="Doctor">Doctor</option>
-              </select>
-            </div>
-          </div>
-          <!-- ENTRADA PARA SELECCIONAR SU Ocupacion -->
-          <div class="form-group">
-            <div class="input-group">
-              <span class="input-group-addon"><i class="fa fa-pencil-square-o"></i></span>
-              <select class="form-control input-lg" name="nuevaOcupacion">
-                <option value="">Selecionar Ocupacion</option>
-                <option value="Administrador">Administrador</option>
-                <option value="Vendedor">Vendedor</option>
-              </select>
-            </div>
-          </div>
+
           <!-- ENTRADA PARA SELECCIONAR GENERO -->
           <div class="form-group">
             <div class="input-group">
@@ -164,18 +192,19 @@
               </select>
             </div>
           </div>
-            <!-- ENTRADA PARA SELECCIONAR ESTADO CIVIL -->
-            <div class="form-group">
+
+          <!-- ENTRADA PARA SELECCIONAR GENERO -->
+          <div class="form-group">
             <div class="input-group">
-              <span class="input-group-addon"><i class="fa fa-users"></i></span>
-              <select class="form-control input-lg" name="nuevoEstado">
-                <option value="">Selecionar Estado Civil</option>
-                <option value="Soltero">Soltero</option>
-                <option value="Casado">Casado</option>
-                <option value="Comprometido">Comprometido</option>
+              <span class="input-group-addon"><i class="fa fa-mars-double"></i></span>
+              <select class="form-control input-lg" name="nuevoEstatus">
+                <option value="">Selecionar Genero</option>
+                <option value="1">Activo</option>
+                <option value="0">Desactivado</option>
               </select>
             </div>
           </div>
+
           <!-- ENTRADA PARA SUBIR FOTO -->
            <div class="form-group" style="justify-content:center">
             <div class="panel">SUBIR FOTO</div>
@@ -196,7 +225,7 @@
 
         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
 
-        <button type="submit" class="btn btn-primary">Guardar Empleado</button>
+        <input type="submit" class="btn btn-primary pull-right" value="Guardar cliente" name="GuardarClientes">
   </div>
 
     </form>
@@ -216,10 +245,10 @@
 
 <!--=====================================
 
-          MODAL EDITAR EMPLEADO
+          MODAL EDITAR Clientes
 
 ======================================-->
-<div id="modalEditarEmpleados" class="modal fade" role="dialog">
+<div id="modalEditarClientes" class="modal fade" role="dialog">
 <div class="modal-dialog">
   <div class="modal-content">
     <form role="form" method="post" enctype="multipart/form-data">
@@ -230,7 +259,7 @@
       ======================================-->
       <div class="modal-header" style="background:#3c8dbc; color:white">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Editar Empleado</h4>
+        <h4 class="modal-title">Editar Clientes</h4>
       </div>
       <!--=====================================
 
@@ -285,29 +314,6 @@
               <input type="date" class="form-control input-lg" name="editarNacimiento" placeholder="Editar fecha de Nacimiento" required>
             </div>
           </div>
-           <!-- ENTRADA PARA SELECCIONAR SU Formacion -->
-           <div class="form-group">
-            <div class="input-group">
-              <span class="input-group-addon"><i class="fa fa-user-plus"></i></span>
-              <select class="form-control input-lg" name="editarFormacion">
-                <option value="">Selecionar Grado de Formacion</option>
-                <option value="Bachiller">Bachiller</option>
-                <option value="Profesional">Profesional</option>
-                <option value="Doctor">Doctor</option>
-              </select>
-            </div>
-          </div>
-          <!-- ENTRADA PARA SELECCIONAR SU Ocupacion -->
-          <div class="form-group">
-            <div class="input-group">
-              <span class="input-group-addon"><i class="fa fa-pencil-square-o"></i></span>
-              <select class="form-control input-lg" name="editarOcupacion">
-                <option value="">Selecionar Ocupacion</option>
-                <option value="Administrador">Administrador</option>
-                <option value="Vendedor">Vendedor</option>
-              </select>
-            </div>
-          </div>
           <!-- ENTRADA PARA SELECCIONAR GENERO -->
           <div class="form-group">
             <div class="input-group">
@@ -316,18 +322,6 @@
                 <option value="">Selecionar Genero</option>
                 <option value="M">Masculino</option>
                 <option value="F">Femenino</option>
-              </select>
-            </div>
-          </div>
-            <!-- ENTRADA PARA SELECCIONAR ESTADO CIVIL -->
-            <div class="form-group">
-            <div class="input-group">
-              <span class="input-group-addon"><i class="fa fa-users"></i></span>
-              <select class="form-control input-lg" name="editarEstado">
-                <option value="">Selecionar Estado Civil</option>
-                <option value="Soltero">Soltero</option>
-                <option value="Casado">Casado</option>
-                <option value="Comprometido">Comprometido</option>
               </select>
             </div>
           </div>

@@ -2,12 +2,25 @@
 
 session_start();
 
+$privilegios = "";
+
 if( isset( $_SESSION['usuario'] ) ){
-  $user = strtoupper( $_SESSION['usuario'] );
+
+  $user =  $_SESSION['usuario'];
+
+  $userImage = $user['imagen'];
+  $userName = $user['nombre'];
+  $userName = strtoupper($userName);
+  $userNivel = $user['nivel'];
 }else{
+
   header('Location:../index.php');
+
 }
 
+if ($userNivel != 1) {
+    $privilegios="display:none;";
+}
 
 //var_dump();
 ?>
@@ -71,21 +84,21 @@ if( isset( $_SESSION['usuario'] ) ){
 
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
-        
-          
+
+
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="http://www.csriveraine.qc.ca/wp-content/uploads/2016/01/nopic.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs"><?= $user ?></span>
+              <img src="<?= $userImage ?>" class="user-image" alt="User Image">
+              <span class="hidden-xs"><?= $userName ?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="http://www.csriveraine.qc.ca/wp-content/uploads/2016/01/nopic.jpg" class="img-circle" alt="User Image">
+                <img src="<?= $userImage ?>" class="img-circle" alt="User Image">
 
                 <p>
-                <?= $user ?>
+                <?= $userName ?>
                   <small>----------------------</small>
                 </p>
               </li>
@@ -93,9 +106,6 @@ if( isset( $_SESSION['usuario'] ) ){
               </li>
               <!-- Menu Footer-->
               <li class="user-footer">
-                <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
-                </div>
                 <div class="pull-right">
                   <a href="../cerrar.php" class="btn btn-default btn-flat">Sign out</a>
                 </div>
@@ -103,7 +113,7 @@ if( isset( $_SESSION['usuario'] ) ){
             </ul>
           </li>
           <!-- Control Sidebar Toggle Button -->
-         
+
         </ul>
       </div>
     </nav>
@@ -118,22 +128,23 @@ if( isset( $_SESSION['usuario'] ) ){
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="http://www.csriveraine.qc.ca/wp-content/uploads/2016/01/nopic.jpg" class="img-circle" alt="User Image">
+          <img src="<?= $userImage?>" class="img-circle" alt="User Image" style="height: 45px;">
         </div>
         <div class="pull-left info">
-          <p><?= $user ?></p>
+          <p><?= $userName ?></p>
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
+
       <ul class="sidebar-menu" data-widget="tree">
-        
-    
-        <li><a href="?ruta=usuarios"><i class="fa fa-user-o"></i> <span>Usuarios</span></a></li>
-        <li><a href="?ruta=empleados"><i class="fa fa-user-circle-o"></i> <span>Empleados</span></a></li>
-        <li><a href="?ruta=categorias"><i class="fa fa-th"></i> <span>Categorias</span></a></li>
-        <li><a href="?ruta=productos"><i class="fa fa-product-hunt"></i> <span>Productos</span></a></li>
+
+
+        <li style="<?= $privilegios ?>" class="d-print-none"><a href="?ruta=usuarios"><i class="fa fa-user-o"></i> <span>Usuarios</span></a></li>
+        <li style="<?= $privilegios ?>"><a href="?ruta=empleados"><i class="fa fa-user-circle-o"></i> <span>Empleados</span></a></li>
+        <li style="<?= $privilegios ?>"><a href="?ruta=categorias"><i class="fa fa-th"></i> <span>Categorias</span></a></li>
+        <li style="<?= $privilegios ?>"><a href="?ruta=productos"><i class="fa fa-product-hunt"></i> <span>Productos</span></a></li>
         <li><a href="?ruta=compras"><i class="fa fa-dollar"></i> <span>Compras</span></a></li>
         <li><a href="?ruta=clientes"><i class="fa fa-group"></i> <span>Clientes</span></a></li>
         <li><a href="?ruta=facturas"><i class="fa fa-barcode"></i> <span>Facturas</span></a></li>
@@ -189,7 +200,7 @@ if( isset( $_SESSION['usuario'] ) ){
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-  
+
 <?php
 
 
@@ -212,7 +223,7 @@ if(isset($_GET["ruta"])){
 
     }else{
 
-      
+
 
     }
 
@@ -287,4 +298,3 @@ if(isset($_GET["ruta"])){
 
 </body>
 </html>
-

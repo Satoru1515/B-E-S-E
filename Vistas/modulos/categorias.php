@@ -34,36 +34,125 @@
  </tr> 
 </thead>
 <tbody>
-                <?php foreach($dtCategoria as $cat){ ?>
+                <?php foreach($dtCategoria as $cat){ 
+                                                    
+                                                    echo'
                  <tr>             
-                  <td class="text-uppercase"><?= $cat['Categoria']?></td>   
-                  <td class="text-uppercase">
-                  <?php
-                  if($cat['StatusCategory']=='1'){
-                    echo <<<str
-
-                    <button class="btn btn-success btn-sm">Activado</button>
-str;
-                    }else{
-                      echo <<<str
-
-                    <button class="btn btn-danger btn-sm">Desactivado</button>
-str;
-                    }
-                  ?>
+                  <td class="text-uppercase">'.$cat["Categoria"].'</td>   
+                  <td class="text-uppercase">';
                   
+                  if($cat['StatusCategory']=='1'){
+                    echo '
+                    <form action="" method="post">
+                    
+                    <input type="number" class="form-control input-lg hidden" name="editarID2" value="'.$cat["ID_Categoria"].'">
+                    <input type="text" class="form-control input-lg hidden" name="editarIM" value="'.$cat["Categoria"].'">
+                    <input type="number" class="form-control input-lg hidden" name="editarIE" value="'.$cat["StatusCategory"].'">
+                    <input type="submit" class="btn btn-success btn-sm" value="Activado">
+
+                    </form>
+
+                    ';
+                  }else{
+                      echo '
+                    <form action="" method="post">
+                    
+                    <input type="number" class="form-control input-lg hidden" name="editarID2" value="'.$cat["ID_Categoria"].'">
+                    <input type="text" class="form-control input-lg hidden" name="editarIM" value="'.$cat["Categoria"].'">
+                    <input type="number" class="form-control input-lg hidden" name="editarIE" value="'.$cat["StatusCategory"].'">
+                    <input type="submit" class="btn btn-danger btn-sm" value="Desactivado">
+
+                    </form>
+
+                    ';}
+                 
+                    echo'
                   </td>                 
                     <td>
                     <div class="btn-group">
-                <button class="btn btn-warning " data-toggle="modal" data-target="#modalEditarCategoria" ><i class="fa fa-pencil"></i></button>
+                <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#'.$cat["ID_Categoria"].'" ><i class="fa fa-pencil"></i></button>
                 
                 <form action="" method="post">
-                <button class="btn btn-danger" type="submit" value="<?= $cat['ID_Categoria']?>" name="eliminar"><i class="fa fa-times"></i></button>
+                <button class="btn btn-danger btn-sm" type="submit" value="'.$cat["ID_Categoria"].'" name="eliminar"><i class="fa fa-times"></i></button>
                 </form>
                     </div>  
                   </td>                      
-                </tr>
-                <?php } ?>
+                </tr>';
+
+
+
+echo '
+
+<!--=====================================
+
+MODAL EDITAR CATEGORÍA
+
+======================================-->
+<div id="'.$cat["ID_Categoria"].'" class="modal fade" role="dialog">
+<div class="modal-dialog">
+  <div class="modal-content">
+    <form role="form" method="post" action="#">
+     <!--=====================================
+
+      CABEZA DEL MODAL
+
+      ======================================-->
+      <div class="modal-header" style="background:#3c8dbc; color:white">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Editar categoría</h4>
+      </div>
+      <!--=====================================
+
+      CUERPO DEL MODAL
+
+      ======================================-->
+      <div class="modal-body">
+        <div class="box-body">
+        
+          <!-- ENTRADA PARA EL NOMBRE -->
+                     
+          <div class="form-group">
+            <div class="input-group">
+              <input type="text" class="hidden" value="">
+              <span class="input-group-addon"><i class="fa fa-th"></i></span>
+              <input type="text" class="form-control input-lg" name="editarCategoria'.$cat["ID_Categoria"].'" placeholder="Categoría">
+              <input type="number" class="form-control input-lg hidden" name="editarID" value="'.$cat["ID_Categoria"].'">
+            </div>
+          </div>
+
+          <div class="form-group">   
+            <div class="input-group">       
+              <span class="input-group-addon"><i class="fa fa-ellipsis-h"></i></span> 
+              <select class="form-control input-lg" name="editarEstatus'.$cat["ID_Categoria"].'" required>       
+                <option value="">Estatus</option>
+                <option value="1">Activo</option>
+                <option value="0">Desactivado</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--=====================================
+
+      PIE DEL MODAL
+
+      ======================================-->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+      </div>
+    </form>
+  </div>
+</div>
+</div>
+
+';
+
+
+
+
+
+                 } ?>
 </tbody>
 </table>
 
@@ -144,65 +233,6 @@ MODAL AGREGAR CATEGORÍA
 </div>
 </div>
 
-<!--=====================================
 
-MODAL EDITAR CATEGORÍA
-
-======================================-->
-<div id="modalEditarCategoria" class="modal fade" role="dialog">
-<div class="modal-dialog">
-  <div class="modal-content">
-    <form role="form" method="post" action="#">
-     <!--=====================================
-
-      CABEZA DEL MODAL
-
-      ======================================-->
-      <div class="modal-header" style="background:#3c8dbc; color:white">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Editar categoría</h4>
-      </div>
-      <!--=====================================
-
-      CUERPO DEL MODAL
-
-      ======================================-->
-      <div class="modal-body">
-        <div class="box-body">
-          <!-- ENTRADA PARA EL NOMBRE -->
-          
-          <div class="form-group">
-            <div class="input-group">
-              <input type="text" class="hidden" value="">
-              <span class="input-group-addon"><i class="fa fa-th"></i></span>
-              <input type="text" class="form-control input-lg" name="editarCategoria" placeholder="Categoría">
-            </div>
-          </div>
-
-          <div class="form-group">   
-            <div class="input-group">       
-              <span class="input-group-addon"><i class="fa fa-ellipsis-h"></i></span> 
-              <select class="form-control input-lg" name="editarEstatus">       
-                <option value="">Estatus</option>
-                <option value="1">Activo</option>
-                <option value="0">Desactivado</option>
-              </select>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!--=====================================
-
-      PIE DEL MODAL
-
-      ======================================-->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
-        <button type="submit" class="btn btn-primary">Guardar cambios</button>
-      </div>
-    </form>
-  </div>
-</div>
-</div>
 
 

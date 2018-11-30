@@ -14,7 +14,7 @@ try{
 
             $usuario = htmlspecialchars($usuario);
             $pass = htmlspecialchars($pass);
-            
+
             //$usuario = filter_var($usuario, 'FILTER_SANITIZE_STRING');
             //$pass = filter_var($pass, 'FILTER_SANITIZE_STRING');
 
@@ -29,7 +29,9 @@ try{
 
                 foreach($credenciales  as $cred){
 
-                    $_SESSION['usuario'] = $cred['Nombre'];
+                    $_SESSION['usuario'] = array('nombre' => $cred['Nombre'],
+                                                  'imagen'=>$cred['img'],
+                                                    'nivel'=>$cred['Nivel']);
 
                 }
 
@@ -37,20 +39,20 @@ try{
 
             }else{
 
-                $msj .= "<li>usuario o password son incorrecto/li>";
+                $msj .= "<li>usuario o password son incorrecto</li>";
 
             }
 
         }else{
 
-            $msj .= "<li>Hay campos vacio</li>";
+            $msj .= "<li>Dejaste algun campo vacio</li>";
 
         }
 
     }
 
-    
-    
+
+
 
 }catch( PDOException $e ){
 
